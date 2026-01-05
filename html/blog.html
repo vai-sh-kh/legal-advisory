@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Blog Post View - NexaLaw</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#dccca3", // Beige/Gold from screenshots
+                        "primary-hover": "#cbb584",
+                        "background-light": "#f3f3f3", // Light mode background
+                        "background-dark": "#0a0a0a", // Dark mode background (deep black)
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#161616", // Slightly lighter black for cards
+                        "text-light": "#1a1a1a",
+                        "text-dark": "#e5e5e5",
+                        "muted-light": "#666666",
+                        "muted-dark": "#a3a3a3",
+                        "border-light": "#e5e5e5",
+                        "border-dark": "#2a2a2a",
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                        display: ["Playfair Display", "serif"], // Assuming a serif for headings based on "NexaLaw" and "Need Legal Help?"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem", // 12px
+                        "xl": "1rem",
+                        "2xl": "1.5rem",
+                    },
+                    typography: (theme) => ({
+                        DEFAULT: {
+                            css: {
+                                color: theme('colors.text-light'),
+                                h1: { color: theme('colors.text-light') },
+                                h2: { color: theme('colors.text-light') },
+                                h3: { color: theme('colors.text-light') },
+                                strong: { color: theme('colors.text-light') },
+                                blockquote: { color: theme('colors.text-light') },
+                            },
+                        },
+                        dark: {
+                            css: {
+                                color: theme('colors.text-dark'),
+                                h1: { color: theme('colors.text-dark') },
+                                h2: { color: theme('colors.text-dark') },
+                                h3: { color: theme('colors.text-dark') },
+                                strong: { color: theme('colors.text-dark') },
+                                blockquote: { 
+                                    color: theme('colors.primary'),
+                                    borderLeftColor: theme('colors.primary'),
+                                },
+                            },
+                        },
+                    }),
+                },
+            },
+        };
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen antialiased text-text-light dark:text-text-dark transition-colors duration-300">
+<div class="max-w-md mx-auto relative bg-background-light dark:bg-background-dark min-h-screen flex flex-col shadow-2xl overflow-hidden">
+<header class="flex items-center justify-between px-6 py-5 sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-border-light dark:border-border-dark">
+<button class="p-2 -ml-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors group">
+<span class="material-icons text-text-light dark:text-text-dark group-hover:text-primary transition-colors">arrow_back</span>
+</button>
+<div class="text-lg font-display font-medium text-text-light dark:text-text-dark">Blog Post</div>
+<button class="p-2 -mr-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors group">
+<span class="material-icons text-text-light dark:text-text-dark group-hover:text-primary transition-colors">share</span>
+</button>
+</header>
+<main class="flex-1 overflow-y-auto">
+<div class="relative w-full h-64">
+<img alt="Legal documents and gavel on a wooden desk" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEUDP7tLfnAHC5UwFQjt-HWmndbwNtO8S-AwEU7OgByxEVVnrmR-2OmvXf2lnAZP4W_lza8kH3sy_ju1N0weKirolRsKf0JLaD7bIVXOTJCWICYrGsN_dE__m8lc9xXPdq4MifRXCtUgIbc-lZUpELFemlTRLl5eRbpf-WaMrS9zEKsBP6WJedaBEhSadAD5njlwPeBNvXoo_RgJEP3GxYI-2WmXUTsi9tH1_8jx2QF0R_7tc2j0dM1w8B94_xeN2DCsWoiqvUCeNV"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-light dark:from-background-dark to-transparent opacity-90"></div>
+<div class="absolute bottom-4 left-6">
+<span class="inline-block px-3 py-1 bg-primary text-background-dark text-xs font-semibold rounded-full uppercase tracking-wider">Corporate Law</span>
+</div>
+</div>
+<div class="px-6 -mt-2 pb-12">
+<div class="mb-8">
+<h1 class="text-3xl font-display font-bold leading-tight mb-4 text-text-light dark:text-text-dark">Navigating Complex Mergers: A Strategic Guide</h1>
+<div class="flex items-center justify-between border-t border-b border-border-light dark:border-border-dark py-4 mt-6">
+<div class="flex items-center space-x-3">
+<img alt="Author portrait" class="w-10 h-10 rounded-full object-cover border border-border-light dark:border-border-dark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkn3VAy6tJoWW5QlZtIWS4plKmOjLC3juPqPkhuEP-586swrUWEjQsNaMv38ZMzG2YewIeCMAh4P-YFg-Z4xW9vYkmspo5AsXKuloRfudjhUOIe8MOtx4qY4PD5tB__tPKQcCMpO6rg0w4hXbqcVq48OTnl369ABjNpBJ0Hr5rrGT8DAd0qjf10K38KXjt6hVBNRuDc-DvYyFnehGiASVwIIBj-IFIvp5B5XgOnoNKbcZeesAcbfYsh2MWGtArdkg2AWHTUSKpwaOy"/>
+<div>
+<p class="text-sm font-medium text-text-light dark:text-text-dark">William Ross</p>
+<p class="text-xs text-muted-light dark:text-muted-dark">Senior Partner</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs text-muted-light dark:text-muted-dark">Published</p>
+<p class="text-sm font-medium text-text-light dark:text-text-dark">Oct 24, 2024</p>
+</div>
+</div>
+</div>
+<article class="prose prose-lg dark:prose-invert prose-headings:font-display prose-p:text-muted-light dark:prose-p:text-muted-dark prose-a:text-primary hover:prose-a:text-primary-hover max-w-none">
+<p>
+                        Mergers and acquisitions (M&amp;A) represent significant milestones for any corporation. While they offer immense opportunities for growth and market expansion, they also come with a unique set of legal complexities that require careful navigation.
+                    </p>
+<h3>The Due Diligence Phase</h3>
+<p>
+                        One of the most critical steps in any merger is due diligence. This process involves a comprehensive appraisal of the target company's assets, liabilities, and commercial potential. At <span class="text-primary font-medium">NexaLaw</span>, we emphasize a rigorous approach to uncover any potential legal pitfalls before they become costly liabilities.
+                    </p>
+<blockquote class="border-l-4 border-primary pl-4 italic my-6 text-text-light dark:text-text-dark font-display text-lg">
+                        "Success in M&amp;A isn't just about the deal you sign; it's about the risks you mitigate beforehand."
+                    </blockquote>
+<h3>Regulatory Compliance</h3>
+<p>
+                        Navigating the regulatory landscape is another hurdle. From antitrust laws to employment regulations, ensuring full compliance is non-negotiable. Our team specializes in identifying the specific regulatory bodies relevant to your industry and ensuring all documentation is meticulous.
+                    </p>
+<div class="my-8 rounded-2xl overflow-hidden relative">
+<img alt="Team meeting discussing strategy" class="w-full h-auto object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_kdXroRZMQ_pvrtjBok2L-rpCYCwcqoP90phz4-4GPtcj3J55f3WstIPGEyHTkSDHb-EZaTe-DTlJiTaQipxRz8cL8Nm-WoZv0FiijJIqamc0UxUnUbvcjgamAcI2ShVviKH91lW0pGLUTdxlSOHJRMZ-2-pM-pb5H7oqdb4ePFGcNIoawP9KFghQ27bYS0g_CdKvvepdlukmJn159H02uJV-LRqFsqdyInrK1A7E9mGjonKnME_73nBqz_xzk0sALsi-MwNNOG2i"/>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-xs text-white/80">Our team discussing merger strategies.</p>
+</div>
+</div>
+<h3>Integration Strategy</h3>
+<p>
+                        Finally, the legal work doesn't end when the ink dries. Post-merger integration involves harmonizing contracts, intellectual property rights, and corporate governance structures. A proactive legal strategy ensures a seamless transition for stakeholders and employees alike.
+                    </p>
+</article>
+<div class="mt-10 flex flex-wrap gap-2">
+<a class="px-3 py-1.5 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-xs text-muted-light dark:text-muted-dark hover:border-primary dark:hover:border-primary transition-colors" href="#">#Mergers</a>
+<a class="px-3 py-1.5 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-xs text-muted-light dark:text-muted-dark hover:border-primary dark:hover:border-primary transition-colors" href="#">#CorporateLaw</a>
+<a class="px-3 py-1.5 rounded-lg bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-xs text-muted-light dark:text-muted-dark hover:border-primary dark:hover:border-primary transition-colors" href="#">#BusinessStrategy</a>
+</div>
+<div class="mt-12 pt-8 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-display font-semibold text-text-light dark:text-text-dark">Read Next</h3>
+<a class="text-primary text-sm font-medium hover:text-primary-hover flex items-center" href="#">
+                            View all <span class="material-icons text-sm ml-1">arrow_forward</span>
+</a>
+</div>
+<a class="block group mb-4" href="#">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 flex gap-4 items-center shadow-sm hover:shadow-md transition-shadow border border-transparent hover:border-primary/20">
+<div class="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+<img alt="Contract signing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDazFSIh1lgOv87nh1n1ZVwGhTne7LrhwvA8lp3TkPH_CZuaSeT9ZrO-1QETKSEiGonwfBS7M2KCPHXn57_9AYWDi6MhNYkhwYkRzDm6k39kdFOidCGtCd6OFHobSKeiivGHQMbmvkCBvvQVqF6nDgGgUxlppvUYjEMqHhtgRMci9qEm26MQE21nuRMFwXQY4_5y5hgSKAQLBeXd4re_EFh4LQ9cA_Jj9XSdfNpimvrRVjVMSvdcEU0gAgW4QeOW1xA8IxeVuNgFTOm"/>
+</div>
+<div class="flex-1">
+<span class="text-[10px] uppercase tracking-wider text-primary font-bold mb-1 block">Litigation</span>
+<h4 class="text-sm font-semibold text-text-light dark:text-text-dark leading-snug mb-1 group-hover:text-primary transition-colors">Understanding Class Action Lawsuits</h4>
+<p class="text-xs text-muted-light dark:text-muted-dark">5 min read</p>
+</div>
+</div>
+</a>
+<a class="block group" href="#">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 flex gap-4 items-center shadow-sm hover:shadow-md transition-shadow border border-transparent hover:border-primary/20">
+<div class="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+<img alt="Business meeting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFP6BLlNF82OYBFXddrryihx8sGwXYgO4f6mouMXtMuYYAl8_4eAqsk4cz4Z_4jyzq_swHq8aOeu-OSpKBybnrSL1mlAuADNMhziBYiWAXFVVKTqH9FBirWN65n1jdu4i2Bqg_g2nQJOaLJFRhJmCrqK2C7nXlacEUNXHRYUCXBczs4vbJ50rCGyboeEEhCjHV4KTFF5tw8Zfaf_KThtn_p5C-3N5lOOgfA_ELH795RCEpsr4RiJp9dTNRbFFojOj4a_5yIxw3DDFb"/>
+</div>
+<div class="flex-1">
+<span class="text-[10px] uppercase tracking-wider text-primary font-bold mb-1 block">Business</span>
+<h4 class="text-sm font-semibold text-text-light dark:text-text-dark leading-snug mb-1 group-hover:text-primary transition-colors">Protecting Intellectual Property</h4>
+<p class="text-xs text-muted-light dark:text-muted-dark">3 min read</p>
+</div>
+</div>
+</a>
+</div>
+</div>
+</main>
+<div class="absolute bottom-6 right-6 z-40">
+<button class="bg-primary hover:bg-primary-hover text-background-dark rounded-full p-4 shadow-lg shadow-black/40 hover:scale-105 transition-all duration-300 flex items-center justify-center group">
+<span class="material-icons">chat_bubble</span>
+</button>
+</div>
+<nav class="bg-surface-light dark:bg-surface-dark border-t border-border-light dark:border-border-dark px-6 py-3 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-icons text-muted-light dark:text-muted-dark group-hover:text-primary text-2xl">home</span>
+<span class="text-[10px] text-muted-light dark:text-muted-dark group-hover:text-primary">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-icons text-muted-light dark:text-muted-dark group-hover:text-primary text-2xl">gavel</span>
+<span class="text-[10px] text-muted-light dark:text-muted-dark group-hover:text-primary">Services</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-icons text-primary text-2xl">article</span>
+<span class="text-[10px] text-primary font-medium">Insights</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-icons text-muted-light dark:text-muted-dark group-hover:text-primary text-2xl">person</span>
+<span class="text-[10px] text-muted-light dark:text-muted-dark group-hover:text-primary">Profile</span>
+</button>
+</nav>
+</div>
+<div class="fixed top-4 right-4 z-50 p-2 bg-white dark:bg-black rounded-full shadow-lg cursor-pointer" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons text-gray-800 dark:text-gray-200">brightness_4</span>
+</div>
+
+</body></html>
