@@ -119,7 +119,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative">
             {/* Left Column - Sticky */}
-            <div className="flex flex-col justify-center h-full lg:sticky lg:top-32 self-start space-y-8">
+            <div className="flex flex-col justify-start h-full lg:sticky lg:top-32 self-start space-y-8">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-[#1A1A1A] dark:text-[#F5F5F5]">
                 Comprehensive Legal Services Designed for Your Success
               </h2>

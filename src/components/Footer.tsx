@@ -75,24 +75,8 @@ export default function Footer() {
             <h4 className="text-[#D4C5A9] font-display text-lg mb-6">More</h4>
             <ul className="space-y-4 text-gray-500 text-sm">
               <li>
-                <Link href="/teams" className="hover:text-white transition">
-                  Teams
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/testimonials"
-                  className="hover:text-white transition"
-                >
-                  Testimonials
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/what-sets-us"
-                  className="hover:text-white transition"
-                >
-                  What Sets Us Apart
+                <Link href="/company" className="hover:text-white transition">
+                  Company
                 </Link>
               </li>
             </ul>

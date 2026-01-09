@@ -31,9 +31,7 @@ export default function Header() {
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/our-process", label: "Our Process" },
-    { href: "/teams", label: "Teams" },
-    { href: "/testimonials", label: "Testimonials" },
-    { href: "/what-sets-us", label: "What Sets Us Apart" },
+    { href: "/company", label: "Company" },
   ];
 
   const isActive = (href: string) => {
