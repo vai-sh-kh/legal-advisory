@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Inter, Manrope } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/components/providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -14,36 +27,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Production Starter",
-  description: "A production-ready Next.js starter template with caching utilities and shadcn/ui",
-  keywords: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui"],
-  authors: [{ name: "Your Name" }],
-  creator: "Your Name",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-    title: "Next.js Production Starter",
-    description: "A production-ready Next.js starter template",
-    siteName: "Next.js Production Starter",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Next.js Production Starter",
-    description: "A production-ready Next.js starter template",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  title: "NexaLaw - Legal Excellence",
+  description: "With over a decade of expertise and $200M+ in successful transactions, we deliver tailored legal solutions.",
 };
 
 export default function RootLayout({
@@ -52,13 +37,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${playfairDisplay.variable} ${inter.variable} ${manrope.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   );
 }
-
