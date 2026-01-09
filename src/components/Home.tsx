@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowUpRight,
   Gavel,
@@ -202,7 +203,10 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6">
+            <Link
+              href="/services/family-law"
+              className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6 cursor-pointer"
+            >
               <div className="absolute -left-3 top-8 w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-mono text-gray-500">
                 2
               </div>
@@ -218,7 +222,7 @@ export default function Home() {
                   your rights and loved ones are protected.
                 </p>
               </div>
-            </div>
+            </Link>
             <div className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6">
               <div className="absolute -left-3 top-8 w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-mono text-gray-500">
                 3

@@ -97,10 +97,7 @@ export default function About() {
                 </div>
               </div>
               <div className="pt-4">
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-4 group"
-                >
+                <Link href="#" className="inline-flex items-center gap-4 group">
                   <span className="px-8 py-3 rounded-full border border-gray-400 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-[#1a1a1a] hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300">
                     About us
                   </span>
@@ -172,7 +169,10 @@ export default function About() {
               </div>
 
               {/* Service 2 - Family Law */}
-              <div className="relative group">
+              <Link
+                href="/services/family-law"
+                className="relative group cursor-pointer"
+              >
                 <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
                     2
@@ -190,11 +190,11 @@ export default function About() {
                   </h3>
                   <p className="text-[#555555] dark:text-[#A3A3A3] leading-relaxed">
                     Compassionate support and strong representation for divorce,
-                    custody disputes, and other sensitive family matters tailored
-                    to your needs.
+                    custody disputes, and other sensitive family matters
+                    tailored to your needs.
                   </p>
                 </div>
-              </div>
+              </Link>
 
               {/* Service 3 - Criminal Defense */}
               <div className="relative group">
@@ -222,7 +222,10 @@ export default function About() {
               </div>
 
               {/* Service 4 - Intellectual Property */}
-              <div className="relative group">
+              <Link
+                href="/services/intellectual-property"
+                className="relative group cursor-pointer"
+              >
                 <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
                     4
@@ -244,10 +247,13 @@ export default function About() {
                     services.
                   </p>
                 </div>
-              </div>
+              </Link>
 
               {/* Service 5 - Dispute Resolution */}
-              <div className="relative group">
+              <Link
+                href="/services/litigation"
+                className="relative group cursor-pointer"
+              >
                 <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
                     5
@@ -268,7 +274,7 @@ export default function About() {
                     court battles.
                   </p>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -278,4 +284,3 @@ export default function About() {
     </div>
   );
 }
-

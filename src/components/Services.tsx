@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import { ArrowUpRight, Building2, UsersRound, Gavel, Lightbulb, Handshake } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  Building2,
+  UsersRound,
+  Gavel,
+  Lightbulb,
+  Handshake,
+  Globe,
+} from "lucide-react";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -26,6 +35,7 @@ export default function Services() {
       title: "Corporate Law",
       description:
         "Expert legal counsel to help your business navigate complex regulations, mergers, and acquisitions with confidence and precision.",
+      href: null,
     },
     {
       number: 2,
@@ -33,6 +43,7 @@ export default function Services() {
       title: "Family Law",
       description:
         "Compassionate support and strong representation for divorce, custody disputes, and other sensitive family matters tailored to your needs.",
+      href: "/services/family-law",
     },
     {
       number: 3,
@@ -40,6 +51,7 @@ export default function Services() {
       title: "Criminal Defense",
       description:
         "Aggressive defense strategies to protect your rights and future. We handle misdemeanors to serious felonies with utmost dedication.",
+      href: null,
     },
     {
       number: 4,
@@ -47,6 +59,7 @@ export default function Services() {
       title: "Intellectual Property",
       description:
         "Safeguarding your innovations and creative works through comprehensive trademark, copyright, and patent protection services.",
+      href: "/services/intellectual-property",
     },
     {
       number: 5,
@@ -54,6 +67,15 @@ export default function Services() {
       title: "Dispute Resolution",
       description:
         "Efficient and effective conflict resolution through mediation, arbitration, and negotiation to avoid lengthy court battles.",
+      href: "/services/litigation",
+    },
+    {
+      number: 6,
+      icon: Globe,
+      title: "Immigration Law",
+      description:
+        "Navigating the complexities of global mobility with precision, expertise, and personalized legal strategies for individuals and corporations.",
+      href: "/services/immigration-law",
     },
   ];
 
@@ -74,10 +96,7 @@ export default function Services() {
               representation.
             </p>
             <div className="pt-4">
-              <a
-                href="#"
-                className="inline-flex items-center group"
-              >
+              <a href="#" className="inline-flex items-center group">
                 <span className="px-8 py-3 rounded-full border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white transition-colors duration-300 group-hover:bg-[#D4C5A9] group-hover:border-[#D4C5A9] group-hover:text-[#0A0A0A]">
                   See All Services
                 </span>
@@ -88,31 +107,41 @@ export default function Services() {
             </div>
           </div>
           <div className="relative pl-8 md:pl-12 border-l border-gray-200 dark:border-gray-800 space-y-12">
-            {services.map((service, index) => (
-              <div key={service.number} className="relative group">
-                <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-gray-600 dark:text-[#A3A3A3] z-10 group-hover:border-[#D4C5A9] group-hover:text-[#D4C5A9] transition-colors duration-300">
-                    {service.number}
-                  </div>
-                  {index < services.length - 1 && (
-                    <div className="w-px h-full bg-gray-200 dark:bg-gray-800 -mt-2"></div>
-                  )}
-                </div>
-                <div className="bg-white dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 p-8 rounded-2xl transition-all duration-300 hover:border-[#D4C5A9]/50 hover:shadow-lg dark:hover:shadow-[#D4C5A9]/5">
-                  <div className="mb-6">
-                    <div className="w-12 h-12 rounded-lg border border-[#D4C5A9]/30 flex items-center justify-center text-[#D4C5A9]">
-                      <service.icon className="w-6 h-6" />
+            {services.map((service, index) => {
+              const ServiceCard = (
+                <div className="relative group">
+                  <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-gray-600 dark:text-[#A3A3A3] z-10 group-hover:border-[#D4C5A9] group-hover:text-[#D4C5A9] transition-colors duration-300">
+                      {service.number}
                     </div>
+                    {index < services.length - 1 && (
+                      <div className="w-px h-full bg-gray-200 dark:bg-gray-800 -mt-2"></div>
+                    )}
                   </div>
-                  <h3 className="text-2xl font-display font-medium mb-3 text-[#D4C5A9]">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-[#A3A3A3] leading-relaxed">
-                    {service.description}
-                  </p>
+                  <div className="bg-white dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 p-8 rounded-2xl transition-all duration-300 hover:border-[#D4C5A9]/50 hover:shadow-lg dark:hover:shadow-[#D4C5A9]/5">
+                    <div className="mb-6">
+                      <div className="w-12 h-12 rounded-lg border border-[#D4C5A9]/30 flex items-center justify-center text-[#D4C5A9]">
+                        <service.icon className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-display font-medium mb-3 text-[#D4C5A9]">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-[#A3A3A3] leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+
+              return service.href ? (
+                <Link key={service.number} href={service.href}>
+                  {ServiceCard}
+                </Link>
+              ) : (
+                <div key={service.number}>{ServiceCard}</div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -121,4 +150,3 @@ export default function Services() {
     </div>
   );
 }
-
