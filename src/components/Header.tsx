@@ -19,8 +19,10 @@ export default function Header() {
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
+      document.body.style.overflowX = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      document.body.style.overflowX = "hidden";
     }
     return () => {
       document.body.style.overflow = "unset";
@@ -58,9 +60,8 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`hover:text-[#D4C5A9] transition-colors ${
-                isActive(link.href) ? "text-[#D4C5A9] dark:text-[#D4C5A9]" : ""
-              }`}
+              className={`hover:text-[#D4C5A9] transition-colors ${isActive(link.href) ? "text-[#D4C5A9] dark:text-[#D4C5A9]" : ""
+                }`}
             >
               {link.label}
             </Link>
@@ -75,25 +76,29 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`w-10 h-10 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:opacity-90 transition md:hidden ${
-            isMenuOpen ? "fixed top-6 right-6 z-50" : "relative z-50"
-          }`}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
+        {/* Mobile Menu Button - Only show hamburger when menu is closed */}
+        {!isMenuOpen && (
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="w-10 h-10 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:opacity-90 transition md:hidden relative z-50"
+            aria-label="Open menu"
+          >
             <Menu className="w-6 h-6" />
-          )}
-        </button>
+          </button>
+        )}
       </nav>
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-[#F5F3EF] dark:bg-[#0A0A0A] z-40 md:hidden">
+        <div className="fixed inset-0 bg-[#F5F3EF] dark:bg-[#0A0A0A] z-40 md:hidden overflow-x-hidden">
+          {/* Close Button - Inside overlay for visibility */}
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:opacity-90 transition z-50"
+            aria-label="Close menu"
+          >
+            <X className="w-6 h-6" />
+          </button>
           <div className="flex flex-col h-full pt-24 px-6">
             <nav className="flex flex-col gap-6">
               {navLinks.map((link) => (
@@ -101,11 +106,10 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`text-2xl font-display font-medium transition-colors ${
-                    isActive(link.href)
+                  className={`text-2xl font-display font-medium transition-colors ${isActive(link.href)
                       ? "text-[#D4C5A9]"
                       : "text-gray-900 dark:text-gray-300 hover:text-[#D4C5A9]"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
