@@ -3,6 +3,8 @@ import { Playfair_Display, Inter, Manrope } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import ThemeTransitionOverlay from "@/components/ThemeTransitionOverlay";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
@@ -38,11 +40,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${playfairDisplay.variable} ${inter.variable} ${manrope.variable} ${geistMono.variable} antialiased`}
       >
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <ThemeProvider>
+          <ThemeTransitionOverlay />
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

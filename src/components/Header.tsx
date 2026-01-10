@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import ThemeToggle from "./ui/theme-toggle";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,7 +46,7 @@ export default function Header() {
     <nav className="sticky top-0 w-full px-6 py-6 md:px-12 flex justify-between items-center bg-[#F5F3EF]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 z-20 2xl:px-60">
       <Link
         href="/"
-        className="text-2xl font-display font-semibold text-gray-900 dark:text-[#D4C5A9] tracking-wide hover:opacity-80 transition-opacity"
+        className="text-2xl  md:text-4xl font-display font-bold text-gray-900 dark:text-[#D4C5A9] tracking-wide hover:opacity-80 transition-opacity"
       >
         NexaLaw
       </Link>
@@ -63,6 +64,7 @@ export default function Header() {
             {link.label}
           </Link>
         ))}
+        <ThemeToggle />
         <Link
           href="/contact"
           className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#D4C5A9] text-[#0A0A0A] font-medium hover:bg-[#D4C5A9]/90 transition-all duration-300"
@@ -100,14 +102,17 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/contact"
-                onClick={() => setIsMenuOpen(false)}
-                className="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#D4C5A9] text-[#0A0A0A] font-medium hover:bg-[#D4C5A9]/90 transition-all duration-300 mt-4 w-fit"
-              >
-                <span>Get in Touch</span>
-                <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
-              </Link>
+              <div className="flex items-center gap-4 mt-4">
+                <ThemeToggle />
+                <Link
+                  href="/contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#D4C5A9] text-[#0A0A0A] font-medium hover:bg-[#D4C5A9]/90 transition-all duration-300"
+                >
+                  <span>Get in Touch</span>
+                  <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
+                </Link>
+              </div>
             </nav>
           </div>
         </div>

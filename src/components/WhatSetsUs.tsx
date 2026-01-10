@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
 import {
   Users,
   MessageCircle,
@@ -13,18 +14,48 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function WhatSetsUs() {
-  useEffect(() => {
-    // Check local storage or system preference for dark mode
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  const fadeInUpStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  // Refs for scroll-triggered animations
+  const sectionRef = useRef(null);
+  const featuresRef = useRef(null);
+
+  const sectionInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const featuresInView = useInView(featuresRef, { once: true, amount: 0.2 });
 
   const features = [
     {
@@ -65,10 +96,18 @@ export default function WhatSetsUs() {
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300">
       <Header />
 
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section
+        ref={sectionRef}
+        className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          <div className="flex flex-col space-y-8 lg:space-y-12">
-            <div className="space-y-6">
+          <motion.div
+            className="flex flex-col space-y-8 lg:space-y-12"
+            variants={fadeInUpStagger}
+            initial="hidden"
+            animate={sectionInView ? "visible" : "hidden"}
+          >
+            <motion.div variants={fadeInUp} className="space-y-6">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight tracking-tight text-gray-900 dark:text-white">
                 &quot;What Sets Us Apart?&quot;
               </h2>
@@ -77,8 +116,11 @@ export default function WhatSetsUs() {
                 commitment to justice that makes NexaLaw your trusted legal
                 partner.
               </p>
-            </div>
-            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+            </motion.div>
+            <motion.div
+              variants={fadeInUp}
+              className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl"
+            >
               <Image
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy6b5MGCmlwWBSy6vv1kKQXnkrrlXEDwWjvoYjdBu1FypbDxJ9BGdIsl3Uo61PNpe7Ftbed-KthYowjS74plyromlT-T-wytqUUgrb_mos0XtLvRmGg9dTvL07fYbfRqZBpldzsuC2Yi9atEC8iYY9Xui0MCI_17wWrXLfXpCYY7yQDb9_fluMDyq9Llvo-LrTl8SAqmoqRq4KyFxaB2LW5mf-dp-0vuBC70s2QocKk_jzEt-B4F5ulQFyjnTvFRLYYDrB_e-kbzCu"
                 alt="Team of professional lawyers discussing legal strategy in a modern office with American flag in background"
@@ -86,12 +128,19 @@ export default function WhatSetsUs() {
                 className="object-cover brightness-90 hover:brightness-100 transition-all duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
-            </div>
-          </div>
-          <div className="flex flex-col space-y-4 pt-4 lg:pt-12">
+            </motion.div>
+          </motion.div>
+          <motion.div
+            ref={featuresRef}
+            className="flex flex-col space-y-4 pt-4 lg:pt-12"
+            variants={fadeInUpStagger}
+            initial="hidden"
+            animate={featuresInView ? "visible" : "hidden"}
+          >
             {features.map((feature, index) => (
-              <div
+              <motion.div
                 key={feature.title}
+                variants={cardVariants}
                 className="group relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1A1A1A] transition-all duration-300 hover:border-[#D4C5A9]/50 hover:bg-gray-50 dark:hover:bg-[#222]"
               >
                 <div
@@ -129,9 +178,9 @@ export default function WhatSetsUs() {
                     </div>
                   )}
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 

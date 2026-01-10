@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 import {
   ArrowUpRight,
   Briefcase,
@@ -15,28 +16,66 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function About() {
-  useEffect(() => {
-    // Check local storage or system preference for dark mode
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  const fadeInUpStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  // Refs for scroll-triggered animations
+  const whoWeAreRef = useRef(null);
+  const servicesRef = useRef(null);
+
+  const whoWeAreInView = useInView(whoWeAreRef, { once: true, amount: 0.2 });
+  const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
 
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#0A0A0A] text-[#333333] dark:text-[#e5e5e5] font-[var(--font-manrope)] antialiased transition-colors duration-300">
       <Header />
 
       {/* Who We Are Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
+      <section
+        ref={whoWeAreRef}
+        className="py-16 md:py-24 relative overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="relative group">
+            <motion.div
+              className="relative group"
+              variants={fadeInUp}
+              initial="hidden"
+              animate={whoWeAreInView ? "visible" : "hidden"}
+            >
               <div
                 className="relative rounded-2xl overflow-hidden shadow-2xl bg-[#1a1a1a] w-full"
                 style={{ aspectRatio: "4/3" }}
@@ -50,22 +89,39 @@ export default function About() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
               </div>
               <div className="hidden lg:block absolute -z-10 -bottom-6 -left-6 w-full h-full border border-[#d6c3a5]/20 rounded-2xl dark:border-[#d6c3a5]/10"></div>
-            </div>
-            <div className="flex flex-col justify-center space-y-8">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-gray-900 dark:text-white">
+            </motion.div>
+            <motion.div
+              className="flex flex-col justify-center space-y-8"
+              variants={fadeInUpStagger}
+              initial="hidden"
+              animate={whoWeAreInView ? "visible" : "hidden"}
+            >
+              <motion.h2
+                variants={fadeInUp}
+                className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-gray-900 dark:text-white"
+              >
                 Who We Are at{" "}
                 <span className="text-[#d6c3a5] font-medium">NexaLaw</span>
-              </h2>
-              <div className="space-y-6 text-lg text-[#666666] dark:text-[#a3a3a3] leading-relaxed font-light">
+              </motion.h2>
+              <motion.div
+                variants={fadeInUp}
+                className="space-y-6 text-lg text-[#666666] dark:text-[#a3a3a3] leading-relaxed font-light"
+              >
                 <p>
                   At NexaLaw, we bring unparalleled expertise, innovation, and
                   dedication to every legal challenge. Our team of seasoned
                   attorneys is committed to delivering justice and crafting
                   strategic solutions tailored to your unique needs.
                 </p>
-              </div>
-              <div className="grid grid-cols-3 gap-4 border-l-0 md:border-l-0 py-4">
-                <div className="flex flex-col pr-4 border-r border-gray-300 dark:border-gray-800">
+              </motion.div>
+              <motion.div
+                variants={fadeInUpStagger}
+                className="grid grid-cols-3 gap-4 border-l-0 md:border-l-0 py-4"
+              >
+                <motion.div
+                  variants={cardVariants}
+                  className="flex flex-col pr-4 border-r border-gray-300 dark:border-gray-800"
+                >
                   <span className="text-4xl md:text-5xl font-medium text-[#d6c3a5]">
                     20+
                   </span>
@@ -74,8 +130,11 @@ export default function About() {
                     <br />
                     Experience
                   </span>
-                </div>
-                <div className="flex flex-col px-4 border-r border-gray-300 dark:border-gray-800">
+                </motion.div>
+                <motion.div
+                  variants={cardVariants}
+                  className="flex flex-col px-4 border-r border-gray-300 dark:border-gray-800"
+                >
                   <span className="text-4xl md:text-5xl font-medium text-[#d6c3a5]">
                     24K+
                   </span>
@@ -84,8 +143,11 @@ export default function About() {
                     <br />
                     Attorneys
                   </span>
-                </div>
-                <div className="flex flex-col pl-4">
+                </motion.div>
+                <motion.div
+                  variants={cardVariants}
+                  className="flex flex-col pl-4"
+                >
                   <span className="text-4xl md:text-5xl font-medium text-[#d6c3a5]">
                     30K+
                   </span>
@@ -94,9 +156,9 @@ export default function About() {
                     <br />
                     Legal Solutions
                   </span>
-                </div>
-              </div>
-              <div className="pt-4">
+                </motion.div>
+              </motion.div>
+              <motion.div variants={fadeInUp} className="pt-4">
                 <Link href="#" className="inline-flex items-center gap-4 group">
                   <span className="px-8 py-3 rounded-full border border-gray-400 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-[#1a1a1a] hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300">
                     About us
@@ -105,28 +167,42 @@ export default function About() {
                     <ArrowUpRight className="w-5 h-5" />
                   </span>
                 </Link>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Comprehensive Services Section */}
-      <section className="py-20 lg:py-32 px-6 md:px-12 lg:px-24 bg-[#F5F3EF] dark:bg-[#0D0D0D]">
+      <section
+        ref={servicesRef}
+        className="py-20 lg:py-32 px-6 md:px-12 lg:px-24 bg-[#F5F3EF] dark:bg-[#0D0D0D]"
+      >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative">
             {/* Left Column - Sticky */}
-            <div className="flex flex-col justify-start h-full lg:sticky lg:top-32 self-start space-y-8">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-[#1A1A1A] dark:text-[#F5F5F5]">
+            <motion.div
+              className="flex flex-col justify-start h-full lg:sticky lg:top-32 self-start space-y-8"
+              variants={fadeInUpStagger}
+              initial="hidden"
+              animate={servicesInView ? "visible" : "hidden"}
+            >
+              <motion.h2
+                variants={fadeInUp}
+                className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-[#1A1A1A] dark:text-[#F5F5F5]"
+              >
                 Comprehensive Legal Services Designed for Your Success
-              </h2>
-              <p className="text-lg text-[#555555] dark:text-[#A3A3A3] leading-relaxed max-w-md">
+              </motion.h2>
+              <motion.p
+                variants={fadeInUp}
+                className="text-lg text-[#555555] dark:text-[#A3A3A3] leading-relaxed max-w-md"
+              >
                 We offer a wide range of specialized legal services tailored to
                 meet the unique needs of individuals and businesses. Our team is
                 dedicated to providing strategic counsel and effective
                 representation.
-              </p>
-              <div className="pt-4">
+              </motion.p>
+              <motion.div variants={fadeInUp} className="pt-4">
                 <Link
                   href="/services"
                   className="inline-flex items-center group"
@@ -138,13 +214,18 @@ export default function About() {
                     <ArrowUpRight className="w-5 h-5" />
                   </span>
                 </Link>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Right Column - Services Timeline */}
-            <div className="relative pl-8 md:pl-12 border-l border-[#E5E5E5] dark:border-[#333333] space-y-12">
+            <motion.div
+              className="relative pl-8 md:pl-12 border-l border-[#E5E5E5] dark:border-[#333333] space-y-12"
+              variants={fadeInUpStagger}
+              initial="hidden"
+              animate={servicesInView ? "visible" : "hidden"}
+            >
               {/* Service 1 - Corporate Law */}
-              <div className="relative group">
+              <motion.div variants={cardVariants} className="relative group">
                 <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
                     1
@@ -166,38 +247,40 @@ export default function About() {
                     precision.
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Service 2 - Family Law */}
-              <Link
-                href="/services/family-law"
-                className="relative group cursor-pointer"
-              >
-                <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
-                    2
-                  </div>
-                  <div className="w-px h-full bg-[#E5E5E5] dark:bg-[#333333] -mt-2"></div>
-                </div>
-                <div className="bg-white dark:bg-[#1A1A1A] border border-[#E5E5E5] dark:border-[#333333] p-8 rounded-2xl transition-all duration-300 hover:border-[#E3D5C0]/50 hover:shadow-lg dark:hover:shadow-[#E3D5C0]/5">
-                  <div className="mb-6">
-                    <div className="w-12 h-12 rounded-lg border border-[#E3D5C0]/30 flex items-center justify-center text-[#E3D5C0]">
-                      <UsersRound className="w-6 h-6" />
+              <motion.div variants={cardVariants}>
+                <Link
+                  href="/services/family-law"
+                  className="relative group cursor-pointer block"
+                >
+                  <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
+                      2
                     </div>
+                    <div className="w-px h-full bg-[#E5E5E5] dark:bg-[#333333] -mt-2"></div>
                   </div>
-                  <h3 className="text-2xl font-medium mb-3 text-[#E3D5C0]">
-                    Family Law
-                  </h3>
-                  <p className="text-[#555555] dark:text-[#A3A3A3] leading-relaxed">
-                    Compassionate support and strong representation for divorce,
-                    custody disputes, and other sensitive family matters
-                    tailored to your needs.
-                  </p>
-                </div>
-              </Link>
+                  <div className="bg-white dark:bg-[#1A1A1A] border border-[#E5E5E5] dark:border-[#333333] p-8 rounded-2xl transition-all duration-300 hover:border-[#E3D5C0]/50 hover:shadow-lg dark:hover:shadow-[#E3D5C0]/5">
+                    <div className="mb-6">
+                      <div className="w-12 h-12 rounded-lg border border-[#E3D5C0]/30 flex items-center justify-center text-[#E3D5C0]">
+                        <UsersRound className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-medium mb-3 text-[#E3D5C0]">
+                      Family Law
+                    </h3>
+                    <p className="text-[#555555] dark:text-[#A3A3A3] leading-relaxed">
+                      Compassionate support and strong representation for
+                      divorce, custody disputes, and other sensitive family
+                      matters tailored to your needs.
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
 
               {/* Service 3 - Criminal Defense */}
-              <div className="relative group">
+              <motion.div variants={cardVariants} className="relative group">
                 <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
                     3
@@ -219,63 +302,67 @@ export default function About() {
                     utmost dedication.
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Service 4 - Intellectual Property */}
-              <Link
-                href="/services/intellectual-property"
-                className="relative group cursor-pointer"
-              >
-                <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
-                    4
-                  </div>
-                  <div className="w-px h-full bg-[#E5E5E5] dark:bg-[#333333] -mt-2"></div>
-                </div>
-                <div className="bg-white dark:bg-[#1A1A1A] border border-[#E5E5E5] dark:border-[#333333] p-8 rounded-2xl transition-all duration-300 hover:border-[#E3D5C0]/50 hover:shadow-lg dark:hover:shadow-[#E3D5C0]/5">
-                  <div className="mb-6">
-                    <div className="w-12 h-12 rounded-lg border border-[#E3D5C0]/30 flex items-center justify-center text-[#E3D5C0]">
-                      <Lightbulb className="w-6 h-6" />
+              <motion.div variants={cardVariants}>
+                <Link
+                  href="/services/intellectual-property"
+                  className="relative group cursor-pointer block"
+                >
+                  <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
+                      4
                     </div>
+                    <div className="w-px h-full bg-[#E5E5E5] dark:bg-[#333333] -mt-2"></div>
                   </div>
-                  <h3 className="text-2xl font-medium mb-3 text-[#E3D5C0]">
-                    Intellectual Property
-                  </h3>
-                  <p className="text-[#555555] dark:text-[#A3A3A3] leading-relaxed">
-                    Safeguarding your innovations and creative works through
-                    comprehensive trademark, copyright, and patent protection
-                    services.
-                  </p>
-                </div>
-              </Link>
+                  <div className="bg-white dark:bg-[#1A1A1A] border border-[#E5E5E5] dark:border-[#333333] p-8 rounded-2xl transition-all duration-300 hover:border-[#E3D5C0]/50 hover:shadow-lg dark:hover:shadow-[#E3D5C0]/5">
+                    <div className="mb-6">
+                      <div className="w-12 h-12 rounded-lg border border-[#E3D5C0]/30 flex items-center justify-center text-[#E3D5C0]">
+                        <Lightbulb className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-medium mb-3 text-[#E3D5C0]">
+                      Intellectual Property
+                    </h3>
+                    <p className="text-[#555555] dark:text-[#A3A3A3] leading-relaxed">
+                      Safeguarding your innovations and creative works through
+                      comprehensive trademark, copyright, and patent protection
+                      services.
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
 
               {/* Service 5 - Dispute Resolution */}
-              <Link
-                href="/services/litigation"
-                className="relative group cursor-pointer"
-              >
-                <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
-                    5
-                  </div>
-                </div>
-                <div className="bg-white dark:bg-[#1A1A1A] border border-[#E5E5E5] dark:border-[#333333] p-8 rounded-2xl transition-all duration-300 hover:border-[#E3D5C0]/50 hover:shadow-lg dark:hover:shadow-[#E3D5C0]/5">
-                  <div className="mb-6">
-                    <div className="w-12 h-12 rounded-lg border border-[#E3D5C0]/30 flex items-center justify-center text-[#E3D5C0]">
-                      <Handshake className="w-6 h-6" />
+              <motion.div variants={cardVariants}>
+                <Link
+                  href="/services/litigation"
+                  className="relative group cursor-pointer block"
+                >
+                  <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#E5E5E5] dark:border-[#333333] bg-[#F5F3EF] dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-[#555555] dark:text-[#A3A3A3] z-10 group-hover:border-[#E3D5C0] group-hover:text-[#E3D5C0] transition-colors duration-300">
+                      5
                     </div>
                   </div>
-                  <h3 className="text-2xl font-medium mb-3 text-[#E3D5C0]">
-                    Dispute Resolution
-                  </h3>
-                  <p className="text-[#555555] dark:text-[#A3A3A3] leading-relaxed">
-                    Efficient and effective conflict resolution through
-                    mediation, arbitration, and negotiation to avoid lengthy
-                    court battles.
-                  </p>
-                </div>
-              </Link>
-            </div>
+                  <div className="bg-white dark:bg-[#1A1A1A] border border-[#E5E5E5] dark:border-[#333333] p-8 rounded-2xl transition-all duration-300 hover:border-[#E3D5C0]/50 hover:shadow-lg dark:hover:shadow-[#E3D5C0]/5">
+                    <div className="mb-6">
+                      <div className="w-12 h-12 rounded-lg border border-[#E3D5C0]/30 flex items-center justify-center text-[#E3D5C0]">
+                        <Handshake className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-medium mb-3 text-[#E3D5C0]">
+                      Dispute Resolution
+                    </h3>
+                    <p className="text-[#555555] dark:text-[#A3A3A3] leading-relaxed">
+                      Efficient and effective conflict resolution through
+                      mediation, arbitration, and negotiation to avoid lengthy
+                      court battles.
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>

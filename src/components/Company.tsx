@@ -21,20 +21,9 @@ import Footer from "./Footer";
 
 export default function Company() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
-
-  useEffect(() => {
-    // Check local storage or system preference for dark mode
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
+  const cardsInView = useInView(cardsRef, { once: true, amount: 0.2 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -53,7 +42,7 @@ export default function Company() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as any,
       },
     },
   };
@@ -66,7 +55,7 @@ export default function Company() {
       scale: 1,
       transition: {
         duration: 0.7,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as any,
       },
     },
   };
@@ -76,8 +65,9 @@ export default function Company() {
       <Header />
 
       <motion.section
+        ref={sectionRef}
         initial="hidden"
-        animate="visible"
+        animate={isInView ? "visible" : "hidden"}
         variants={containerVariants}
         className="py-20 px-6 md:px-12 lg:px-20 bg-[#F5F3EF] dark:bg-[#0A0A0A]"
       >
@@ -118,6 +108,9 @@ export default function Company() {
             </motion.div>
           </motion.div>
           <motion.div
+            ref={cardsRef}
+            initial="hidden"
+            animate={cardsInView ? "visible" : "hidden"}
             variants={containerVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >

@@ -1,39 +1,94 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function LitigationPage() {
-  useEffect(() => {
-    // Set dark mode by default for service pages
-    document.documentElement.classList.add("dark");
-  }, []);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  const fadeInUpStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  // Refs for scroll-triggered animations
+  const headerRef = useRef(null);
+  const contentRef = useRef(null);
+  const sidebarRef = useRef(null);
+
+  const headerInView = useInView(headerRef, { once: true, amount: 0.2 });
+  const contentInView = useInView(contentRef, { once: true, amount: 0.2 });
+  const sidebarInView = useInView(sidebarRef, { once: true, amount: 0.2 });
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white font-sans antialiased">
+    <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#0A0A0A] text-gray-900 dark:text-white font-sans antialiased transition-colors duration-300">
       <Header />
 
-      <header className="px-6 md:px-12 lg:px-24 pt-20 pb-16">
+      <header ref={headerRef} className="px-6 md:px-12 lg:px-24 pt-20 pb-16">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
-          <div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] text-[#D4C5A9]">
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            animate={headerInView ? "visible" : "hidden"}
+          >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] text-gray-900 dark:text-[#D4C5A9]">
               Litigation & Dispute Resolution
             </h1>
-          </div>
-          <div className="max-w-md ml-auto">
-            <p className="text-lg text-[#A3A3A3] leading-relaxed">
+          </motion.div>
+          <motion.div
+            className="max-w-md ml-auto"
+            variants={fadeInUp}
+            initial="hidden"
+            animate={headerInView ? "visible" : "hidden"}
+          >
+            <p className="text-lg text-gray-600 dark:text-[#A3A3A3] leading-relaxed">
               Protecting your interests through strategic advocacy and precise
               legal execution. From complex commercial disputes to private
               mediation, we deliver results when they matter most.
             </p>
-          </div>
+          </motion.div>
         </div>
       </header>
 
-      <section className="px-6 md:px-12 lg:px-24 mb-24">
+      <motion.section
+        className="px-6 md:px-12 lg:px-24 mb-24"
+        variants={fadeInUp}
+        initial="hidden"
+        animate={headerInView ? "visible" : "hidden"}
+      >
         <div className="max-w-7xl mx-auto relative group overflow-hidden rounded-3xl aspect-[21/9] bg-[#141414] flex items-center justify-center border border-[#262626]">
           <Image
             alt="Legal Boardroom"
@@ -48,22 +103,27 @@ export default function LitigationPage() {
             Inside NexaLaw Advocacy
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <main className="px-6 md:px-12 lg:px-24 pb-32">
+      <main ref={contentRef} className="px-6 md:px-12 lg:px-24 pb-32">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-          <div className="lg:col-span-7 space-y-24">
-            <section>
+          <motion.div
+            className="lg:col-span-7 space-y-24"
+            variants={fadeInUpStagger}
+            initial="hidden"
+            animate={contentInView ? "visible" : "hidden"}
+          >
+            <motion.section variants={cardVariants}>
               <div className="flex items-center gap-4 mb-8 text-[#D4C5A9]/60">
                 <span className="text-sm font-bold tracking-widest uppercase">
                   01
                 </span>
                 <div className="h-px w-12 bg-[#D4C5A9]/20"></div>
               </div>
-              <h2 className="text-3xl font-medium mb-6 text-[#D4C5A9]">
+              <h2 className="text-3xl font-medium mb-6 text-gray-900 dark:text-[#D4C5A9]">
                 Civil Litigation
               </h2>
-              <p className="text-[#A3A3A3] text-lg leading-relaxed mb-8">
+              <p className="text-gray-600 dark:text-[#A3A3A3] text-lg leading-relaxed mb-8">
                 Our litigation team handles a broad range of civil disputes in
                 state and federal courts. We represent corporations and
                 individuals in matters involving breach of contract, business
@@ -79,24 +139,25 @@ export default function LitigationPage() {
                   className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />
               </div>
-            </section>
+            </motion.section>
 
-            <section>
+            <motion.section variants={cardVariants}>
               <div className="flex items-center gap-4 mb-8 text-[#D4C5A9]/60">
                 <span className="text-sm font-bold tracking-widest uppercase">
                   02
                 </span>
                 <div className="h-px w-12 bg-[#D4C5A9]/20"></div>
               </div>
-              <h2 className="text-3xl font-medium mb-6 text-[#D4C5A9]">
+              <h2 className="text-3xl font-medium mb-6 text-gray-900 dark:text-[#D4C5A9]">
                 Mediation & Arbitration
               </h2>
-              <p className="text-[#A3A3A3] text-lg leading-relaxed mb-8">
+              <p className="text-gray-600 dark:text-[#A3A3A3] text-lg leading-relaxed mb-8">
                 Alternative Dispute Resolution (ADR) provides a confidential,
                 efficient path to settlement without the public nature of a
-                courtroom trial. Our certified mediators and seasoned arbitration
-                counsel help clients reach favorable resolutions while preserving
-                business relationships and minimizing legal costs.
+                courtroom trial. Our certified mediators and seasoned
+                arbitration counsel help clients reach favorable resolutions
+                while preserving business relationships and minimizing legal
+                costs.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="relative w-full h-64 rounded-2xl overflow-hidden border border-[#262626]">
@@ -116,29 +177,35 @@ export default function LitigationPage() {
                   />
                 </div>
               </div>
-            </section>
+            </motion.section>
 
-            <section>
+            <motion.section variants={cardVariants}>
               <div className="flex items-center gap-4 mb-8 text-[#D4C5A9]/60">
                 <span className="text-sm font-bold tracking-widest uppercase">
                   03
                 </span>
                 <div className="h-px w-12 bg-[#D4C5A9]/20"></div>
               </div>
-              <h2 className="text-3xl font-medium mb-6 text-[#D4C5A9]">
+              <h2 className="text-3xl font-medium mb-6 text-gray-900 dark:text-[#D4C5A9]">
                 Strategic Negotiation
               </h2>
-              <p className="text-[#A3A3A3] text-lg leading-relaxed">
+              <p className="text-gray-600 dark:text-[#A3A3A3] text-lg leading-relaxed">
                 Many disputes are won before they ever reach a judge. We excel
                 in pre-litigation negotiation, utilizing detailed case analysis
                 and leverage to secure settlements that align with our clients'
                 needs. Our reputation for trial readiness gives us a unique
                 advantage at the bargaining table.
               </p>
-            </section>
-          </div>
+            </motion.section>
+          </motion.div>
 
-          <aside className="lg:col-span-5 relative">
+          <motion.aside
+            ref={sidebarRef}
+            className="lg:col-span-5 relative"
+            variants={fadeInUp}
+            initial="hidden"
+            animate={sidebarInView ? "visible" : "hidden"}
+          >
             <div className="lg:sticky lg:top-12 bg-[#141414] border border-[#262626] p-8 md:p-10 rounded-[2rem]">
               <h3 className="text-2xl font-medium mb-2 text-[#D4C5A9]">
                 Schedule a Consultation
@@ -148,30 +215,30 @@ export default function LitigationPage() {
               </p>
               <form className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
+                  <label className="block text-sm font-medium text-gray-600 dark:text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
                     Full Name
                   </label>
                   <input
-                    className="w-full bg-black/50 border border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-white py-3 px-4"
+                    className="w-full bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-gray-900 dark:text-white py-3 px-4"
                     placeholder="John Doe"
                     type="text"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
+                  <label className="block text-sm font-medium text-gray-600 dark:text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
                     Email Address
                   </label>
                   <input
-                    className="w-full bg-black/50 border border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-white py-3 px-4"
+                    className="w-full bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-gray-900 dark:text-white py-3 px-4"
                     placeholder="john@example.com"
                     type="email"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
+                  <label className="block text-sm font-medium text-gray-600 dark:text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
                     Legal Matter
                   </label>
-                  <select className="w-full bg-black/50 border border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-white py-3 px-4">
+                  <select className="w-full bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-gray-900 dark:text-white py-3 px-4">
                     <option>Commercial Litigation</option>
                     <option>Contract Dispute</option>
                     <option>Mediation/Arbitration</option>
@@ -179,11 +246,11 @@ export default function LitigationPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
+                  <label className="block text-sm font-medium text-gray-600 dark:text-[#D4C5A9]/60 mb-2 uppercase tracking-wider">
                     Brief Overview
                   </label>
                   <textarea
-                    className="w-full bg-black/50 border border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-white py-3 px-4"
+                    className="w-full bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-[#262626] rounded-xl focus:ring-[#D4C5A9] focus:border-[#D4C5A9] text-gray-900 dark:text-white py-3 px-4"
                     placeholder="Tell us about your case..."
                     rows={4}
                   />
@@ -197,7 +264,7 @@ export default function LitigationPage() {
                 </button>
               </form>
             </div>
-          </aside>
+          </motion.aside>
         </div>
       </main>
 
@@ -205,4 +272,3 @@ export default function LitigationPage() {
     </div>
   );
 }
-

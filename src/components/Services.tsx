@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 import {
   ArrowUpRight,
-  Building2,
   UsersRound,
-  Gavel,
   Lightbulb,
   Handshake,
   Globe,
@@ -15,46 +14,72 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function Services() {
-  useEffect(() => {
-    // Check local storage or system preference for dark mode
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
 
+  const fadeInUpStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  // Refs for scroll-triggered animations
+  const servicesRef = useRef(null);
+  const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
   const services = [
+    // {
+    //   number: 1,
+    //   icon: Building2,
+    //   title: "Corporate Law",
+    //   description:
+    //     "Expert legal counsel to help your business navigate complex regulations, mergers, and acquisitions with confidence and precision.",
+    //   href: "/services/corporate-law",
+    // },
     {
       number: 1,
-      icon: Building2,
-      title: "Corporate Law",
-      description:
-        "Expert legal counsel to help your business navigate complex regulations, mergers, and acquisitions with confidence and precision.",
-      href: null,
-    },
-    {
-      number: 2,
       icon: UsersRound,
       title: "Family Law",
       description:
         "Compassionate support and strong representation for divorce, custody disputes, and other sensitive family matters tailored to your needs.",
       href: "/services/family-law",
     },
+    // {
+    //   number: 3,
+    //   icon: Gavel,
+    //   title: "Criminal Defense",
+    //   description:
+    //     "Aggressive defense strategies to protect your rights and future. We handle misdemeanors to serious felonies with utmost dedication.",
+    //   href: "/services/criminal-defense",
+    // },
     {
-      number: 3,
-      icon: Gavel,
-      title: "Criminal Defense",
-      description:
-        "Aggressive defense strategies to protect your rights and future. We handle misdemeanors to serious felonies with utmost dedication.",
-      href: null,
-    },
-    {
-      number: 4,
+      number: 2,
       icon: Lightbulb,
       title: "Intellectual Property",
       description:
@@ -62,15 +87,15 @@ export default function Services() {
       href: "/services/intellectual-property",
     },
     {
-      number: 5,
+      number: 3,
       icon: Handshake,
-      title: "Dispute Resolution",
+      title: "Litigation",
       description:
         "Efficient and effective conflict resolution through mediation, arbitration, and negotiation to avoid lengthy court battles.",
       href: "/services/litigation",
     },
     {
-      number: 6,
+      number: 4,
       icon: Globe,
       title: "Immigration Law",
       description:
@@ -83,19 +108,33 @@ export default function Services() {
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300">
       <Header />
 
-      <section className="py-20 lg:py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+      <section
+        ref={servicesRef}
+        className="py-20 lg:py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative">
-          <div className="flex flex-col justify-center h-full lg:sticky lg:top-32 self-start space-y-8">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium tracking-tight leading-[1.1] text-gray-900 dark:text-[#D4C5A9]">
+          <motion.div
+            className="flex flex-col h-full lg:sticky lg:top-32 self-start space-y-8"
+            variants={fadeInUpStagger}
+            initial="hidden"
+            animate={servicesInView ? "visible" : "hidden"}
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-medium tracking-tight leading-[1.1] text-gray-900 dark:text-[#D4C5A9]"
+            >
               Comprehensive Legal Services Designed for Your Success
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-[#A3A3A3] leading-relaxed max-w-md">
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-gray-600 dark:text-[#A3A3A3] leading-relaxed max-w-md"
+            >
               We offer a wide range of specialized legal services tailored to
               meet the unique needs of individuals and businesses. Our team is
               dedicated to providing strategic counsel and effective
               representation.
-            </p>
-            <div className="pt-4">
+            </motion.p>
+            <motion.div variants={fadeInUp} className="pt-4">
               <a href="#" className="inline-flex items-center group">
                 <span className="px-8 py-3 rounded-full border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white transition-colors duration-300 group-hover:bg-[#D4C5A9] group-hover:border-[#D4C5A9] group-hover:text-[#0A0A0A]">
                   See All Services
@@ -104,12 +143,17 @@ export default function Services() {
                   <ArrowUpRight className="w-5 h-5" />
                 </span>
               </a>
-            </div>
-          </div>
-          <div className="relative pl-8 md:pl-12 border-l border-gray-200 dark:border-gray-800 space-y-12">
+            </motion.div>
+          </motion.div>
+          <motion.div
+            className="relative pl-8 md:pl-12 border-l border-gray-200 dark:border-gray-800 space-y-24"
+            variants={fadeInUpStagger}
+            initial="hidden"
+            animate={servicesInView ? "visible" : "hidden"}
+          >
             {services.map((service, index) => {
               const ServiceCard = (
-                <div className="relative group">
+                <motion.div variants={cardVariants} className="relative group my-8 lg:my-16">
                   <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-gray-600 dark:text-[#A3A3A3] z-10 group-hover:border-[#D4C5A9] group-hover:text-[#D4C5A9] transition-colors duration-300">
                       {service.number}
@@ -131,7 +175,7 @@ export default function Services() {
                       {service.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               );
 
               return service.href ? (
@@ -142,7 +186,7 @@ export default function Services() {
                 <div key={service.number}>{ServiceCard}</div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 

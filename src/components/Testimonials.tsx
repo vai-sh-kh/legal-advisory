@@ -1,25 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "./Header";
 import Footer from "./Footer";
 
 export default function Testimonials() {
-  useEffect(() => {
-    // Check local storage or system preference for dark mode
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
   const testimonials = [
     {
       name: "John Doe",

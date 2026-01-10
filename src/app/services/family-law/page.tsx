@@ -1,35 +1,88 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
 import { Play, ArrowRight, Users, AlertTriangle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function FamilyLawPage() {
-  useEffect(() => {
-    // Set dark mode by default for service pages
-    document.documentElement.classList.add("dark");
-  }, []);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  const fadeInUpStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  // Refs for scroll-triggered animations
+  const headerRef = useRef(null);
+  const contentRef = useRef(null);
+  const sidebarRef = useRef(null);
+
+  const headerInView = useInView(headerRef, { once: true, amount: 0.2 });
+  const contentInView = useInView(contentRef, { once: true, amount: 0.2 });
+  const sidebarInView = useInView(sidebarRef, { once: true, amount: 0.2 });
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white font-sans antialiased">
+    <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#0A0A0A] text-gray-900 dark:text-white font-sans antialiased transition-colors duration-300">
       <Header />
 
-      <header className="max-w-7xl mx-auto px-6 pt-20 pb-16">
+      <header ref={headerRef} className="max-w-7xl mx-auto px-6 pt-20 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
-          <div>
-            <h1 className="text-6xl md:text-8xl font-medium tracking-tight text-[#D4C5A9] leading-[1.1]">
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            animate={headerInView ? "visible" : "hidden"}
+          >
+            <h1 className="text-6xl md:text-8xl font-medium tracking-tight text-gray-900 dark:text-[#D4C5A9] leading-[1.1]">
               Family Law
             </h1>
-          </div>
-          <div className="max-w-md ml-auto">
-            <p className="text-lg text-[#A3A3A3] leading-relaxed">
+          </motion.div>
+          <motion.div
+            className="max-w-md ml-auto"
+            variants={fadeInUpStagger}
+            initial="hidden"
+            animate={headerInView ? "visible" : "hidden"}
+          >
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-gray-600 dark:text-[#A3A3A3] leading-relaxed"
+            >
               Navigating sensitive family transitions with precision, empathy,
               and unwavering dedication to your future and the well-being of
               your loved ones.
-            </p>
-            <div className="mt-8">
+            </motion.p>
+            <motion.div variants={fadeInUp} className="mt-8">
               <a className="inline-flex items-center group" href="#">
                 <span className="px-8 py-3 rounded-full border border-[#D4C5A9] text-[#D4C5A9] transition-colors duration-300 group-hover:bg-[#D4C5A9] group-hover:text-[#000000]">
                   Explore More
@@ -38,12 +91,17 @@ export default function FamilyLawPage() {
                   <ArrowRight className="w-5 h-5 rotate-[-45deg]" />
                 </span>
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </header>
 
-      <section className="max-w-7xl mx-auto px-6 pb-24">
+      <motion.section
+        className="max-w-7xl mx-auto px-6 pb-24"
+        variants={fadeInUp}
+        initial="hidden"
+        animate={headerInView ? "visible" : "hidden"}
+      >
         <div className="relative rounded-3xl overflow-hidden aspect-video group cursor-pointer">
           <Image
             alt="Private Consultation Room"
@@ -60,51 +118,66 @@ export default function FamilyLawPage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <main className="max-w-7xl mx-auto px-6 pb-32">
+      <main ref={contentRef} className="max-w-7xl mx-auto px-6 pb-32">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          <div className="lg:col-span-8 space-y-20">
-            <section>
-              <h2 className="text-3xl font-medium mb-8 text-[#D4C5A9]">
+          <motion.div
+            className="lg:col-span-8 space-y-20"
+            variants={fadeInUpStagger}
+            initial="hidden"
+            animate={contentInView ? "visible" : "hidden"}
+          >
+            <motion.section variants={fadeInUp}>
+              <h2 className="text-3xl font-medium mb-8 text-gray-900 dark:text-[#D4C5A9]">
                 Comprehensive Support for Family Matters
               </h2>
-              <div className="prose prose-invert max-w-none text-[#A3A3A3] space-y-6">
+              <div className="prose prose-invert dark:prose-invert max-w-none text-gray-600 dark:text-[#A3A3A3] space-y-6">
                 <p className="text-xl leading-relaxed">
                   At NexaLaw, we understand that family legal issues are among
-                  the most challenging experiences life can present. Our approach
-                  combines strategic legal excellence with the sensitivity
-                  required for domestic matters.
+                  the most challenging experiences life can present. Our
+                  approach combines strategic legal excellence with the
+                  sensitivity required for domestic matters.
                 </p>
               </div>
-            </section>
+            </motion.section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-[#121212] border border-[#262626] flex items-center justify-center text-[#D4C5A9]">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-12"
+              variants={fadeInUpStagger}
+            >
+              <motion.div variants={cardVariants} className="space-y-6">
+                <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-[#121212] border border-gray-200 dark:border-[#262626] flex items-center justify-center text-[#D4C5A9]">
                   <Users className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-medium">Divorce & Separation</h3>
-                <p className="text-[#A3A3A3] leading-relaxed">
+                <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
+                  Divorce & Separation
+                </h3>
+                <p className="text-gray-600 dark:text-[#A3A3A3] leading-relaxed">
                   Strategic navigation of complex asset division, spousal
                   support, and legal dissolution while protecting your interests
                   and dignity.
                 </p>
-              </div>
-              <div className="space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-[#121212] border border-[#262626] flex items-center justify-center text-[#D4C5A9]">
+              </motion.div>
+              <motion.div variants={cardVariants} className="space-y-6">
+                <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-[#121212] border border-gray-200 dark:border-[#262626] flex items-center justify-center text-[#D4C5A9]">
                   <AlertTriangle className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-medium">Child Custody</h3>
-                <p className="text-[#A3A3A3] leading-relaxed">
+                <h3 className="text-2xl font-medium text-gray-900 dark:text-white">
+                  Child Custody
+                </h3>
+                <p className="text-gray-600 dark:text-[#A3A3A3] leading-relaxed">
                   Advocating for the best interests of your children with
                   tailored parenting plans and robust representation in
                   visitation disputes.
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            <div className="rounded-3xl overflow-hidden">
+            <motion.div
+              variants={fadeInUp}
+              className="rounded-3xl overflow-hidden"
+            >
               <div className="relative w-full h-80 rounded-3xl overflow-hidden">
                 <Image
                   alt="Legal Consultation"
@@ -113,57 +186,75 @@ export default function FamilyLawPage() {
                   className="object-cover"
                 />
               </div>
-            </div>
+            </motion.div>
 
-            <section className="space-y-12">
-              <div className="border-t border-[#262626] pt-12">
-                <h3 className="text-2xl font-medium mb-4">Financial Settlements</h3>
-                <p className="text-[#A3A3A3] leading-relaxed">
+            <motion.section variants={fadeInUpStagger} className="space-y-12">
+              <motion.div
+                variants={cardVariants}
+                className="border-t border-gray-200 dark:border-[#262626] pt-12"
+              >
+                <h3 className="text-2xl font-medium mb-4 text-gray-900 dark:text-white">
+                  Financial Settlements
+                </h3>
+                <p className="text-gray-600 dark:text-[#A3A3A3] leading-relaxed">
                   Ensuring fair distribution of marital property, business
                   interests, and retirement accounts through meticulous
                   financial analysis.
                 </p>
-              </div>
-              <div className="border-t border-[#262626] pt-12">
-                <h3 className="text-2xl font-medium mb-4">Prenuptial Agreements</h3>
-                <p className="text-[#A3A3A3] leading-relaxed">
+              </motion.div>
+              <motion.div
+                variants={cardVariants}
+                className="border-t border-gray-200 dark:border-[#262626] pt-12"
+              >
+                <h3 className="text-2xl font-medium mb-4 text-gray-900 dark:text-white">
+                  Prenuptial Agreements
+                </h3>
+                <p className="text-gray-600 dark:text-[#A3A3A3] leading-relaxed">
                   Crafting forward-thinking agreements that provide security and
                   clarity for both parties entering a new chapter of life.
                 </p>
-              </div>
-            </section>
-          </div>
+              </motion.div>
+            </motion.section>
+          </motion.div>
 
-          <div className="lg:col-span-4">
-            <div className="sticky top-12 bg-[#121212] border border-[#262626] p-8 rounded-3xl">
-              <h3 className="text-2xl font-medium mb-2">Schedule a Consultation</h3>
-              <p className="text-[#A3A3A3] text-sm mb-8">
+          <motion.div
+            ref={sidebarRef}
+            className="lg:col-span-4"
+            variants={fadeInUp}
+            initial="hidden"
+            animate={sidebarInView ? "visible" : "hidden"}
+          >
+            <div className="sticky top-12 bg-white dark:bg-[#121212] border border-gray-200 dark:border-[#262626] p-8 rounded-3xl">
+              <h3 className="text-2xl font-medium mb-2 text-gray-900 dark:text-white">
+                Schedule a Consultation
+              </h3>
+              <p className="text-gray-600 dark:text-[#A3A3A3] text-sm mb-8">
                 Discuss your case privately with our expert partners.
               </p>
               <form className="space-y-6">
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-[#A3A3A3] mb-2">
+                  <label className="block text-xs font-medium uppercase tracking-wider text-gray-600 dark:text-[#A3A3A3] mb-2">
                     Full Name
                   </label>
                   <input
-                    className="w-full bg-[#000000] border border-[#262626] rounded-xl px-4 py-3 text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]"
+                    className="w-full bg-gray-50 dark:bg-[#000000] border border-gray-200 dark:border-[#262626] rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]"
                     type="text"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-[#A3A3A3] mb-2">
+                  <label className="block text-xs font-medium uppercase tracking-wider text-gray-600 dark:text-[#A3A3A3] mb-2">
                     Email Address
                   </label>
                   <input
-                    className="w-full bg-[#000000] border border-[#262626] rounded-xl px-4 py-3 text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]"
+                    className="w-full bg-gray-50 dark:bg-[#000000] border border-gray-200 dark:border-[#262626] rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]"
                     type="email"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-[#A3A3A3] mb-2">
+                  <label className="block text-xs font-medium uppercase tracking-wider text-gray-600 dark:text-[#A3A3A3] mb-2">
                     Service Type
                   </label>
-                  <select className="w-full bg-[#000000] border border-[#262626] rounded-xl px-4 py-3 text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]">
+                  <select className="w-full bg-gray-50 dark:bg-[#000000] border border-gray-200 dark:border-[#262626] rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]">
                     <option>Divorce</option>
                     <option>Custody</option>
                     <option>Settlements</option>
@@ -171,21 +262,20 @@ export default function FamilyLawPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-[#A3A3A3] mb-2">
+                  <label className="block text-xs font-medium uppercase tracking-wider text-gray-600 dark:text-[#A3A3A3] mb-2">
                     Brief Message
                   </label>
                   <textarea
-                    className="w-full bg-[#000000] border border-[#262626] rounded-xl px-4 py-3 text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]"
+                    className="w-full bg-gray-50 dark:bg-[#000000] border border-gray-200 dark:border-[#262626] rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:ring-[#D4C5A9] focus:border-[#D4C5A9]"
                     rows={4}
                   />
                 </div>
                 <button className="w-full bg-[#D4C5A9] text-[#000000] font-bold py-4 rounded-full hover:bg-[#C9B69C] transition-colors flex items-center justify-center gap-2">
-                  Send Request{" "}
-                  <ArrowRight className="w-5 h-5" />
+                  Send Request <ArrowRight className="w-5 h-5" />
                 </button>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
       </main>
 
@@ -193,4 +283,3 @@ export default function FamilyLawPage() {
     </div>
   );
 }
-

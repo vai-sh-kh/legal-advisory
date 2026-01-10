@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 import {
   Building2,
   DollarSign,
@@ -14,19 +15,48 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function OurProcess() {
-  useEffect(() => {
-    // Check local storage or system preference for dark mode
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
 
+  const fadeInUpStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  // Refs for scroll-triggered animations
+  const headerRef = useRef(null);
+  const servicesRef = useRef(null);
+
+  const headerInView = useInView(headerRef, { once: true, amount: 0.2 });
+  const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
   const services = [
     {
       number: 1,
@@ -82,19 +112,30 @@ export default function OurProcess() {
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300">
       <Header />
 
-      <header className="px-6 md:px-12 pt-24 pb-16">
+      <header ref={headerRef} className="px-6 md:px-12 pt-24 pb-16">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-medium leading-tight text-gray-900 dark:text-[#D4C5A9] max-w-5xl">
+          <motion.h1
+            variants={fadeInUp}
+            initial="hidden"
+            animate={headerInView ? "visible" : "hidden"}
+            className="text-5xl md:text-7xl lg:text-8xl font-display font-medium leading-tight text-gray-900 dark:text-[#D4C5A9] max-w-5xl"
+          >
             Comprehensive Legal Services Designed for Your Success
-          </h1>
+          </motion.h1>
         </div>
       </header>
 
-      <section className="px-6 md:px-12 pb-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+      <section ref={servicesRef} className="px-6 md:px-12 pb-24">
+        <motion.div
+          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16"
+          variants={fadeInUpStagger}
+          initial="hidden"
+          animate={servicesInView ? "visible" : "hidden"}
+        >
           {services.map((service, index) => {
             const ServiceCard = (
-              <div
+              <motion.div
+                variants={cardVariants}
                 className={`relative flex gap-8 group ${
                   index === services.length - 1 ? "last-card" : ""
                 }`}
@@ -120,7 +161,7 @@ export default function OurProcess() {
                     {service.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
 
             return service.href ? (
@@ -131,7 +172,7 @@ export default function OurProcess() {
               <div key={service.number}>{ServiceCard}</div>
             );
           })}
-        </div>
+        </motion.div>
       </section>
 
       <Footer />

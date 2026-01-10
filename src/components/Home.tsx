@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 import {
   ArrowUpRight,
   Gavel,
@@ -21,52 +22,120 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function Home() {
-  useEffect(() => {
-    // Check local storage or system preference for dark mode
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  const fadeInUpStagger = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as any,
+      },
+    },
+  };
+
+  // Refs for scroll-triggered animations
+  const heroRef = useRef(null);
+  const whoWeAreRef = useRef(null);
+  const servicesRef = useRef(null);
+  const whatSetsUsRef = useRef(null);
+  const testimonialsRef = useRef(null);
+  const processRef = useRef(null);
+
+  const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
+  const whoWeAreInView = useInView(whoWeAreRef, { once: true, amount: 0.2 });
+  const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
+  const whatSetsUsInView = useInView(whatSetsUsRef, {
+    once: true,
+    amount: 0.2,
+  });
+  const testimonialsInView = useInView(testimonialsRef, {
+    once: true,
+    amount: 0.2,
+  });
+  const processInView = useInView(processRef, { once: true, amount: 0.2 });
 
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300">
       <Header />
 
       {/* Hero Section */}
-      <header className="relative px-6 md:px-12 pt-12 pb-24 lg:pt-20 lg:pb-32 overflow-hidden">
+      <header
+        ref={heroRef}
+        className="relative px-6 md:px-12 pt-12 pb-24 lg:pt-20 lg:pb-32 overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          <div className="z-10">
-            <h1 className="text-5xl lg:text-7xl font-display leading-tight text-gray-900 dark:text-[#D4C5A9] mb-8">
+          <motion.div
+            className="z-10"
+            initial="hidden"
+            animate={heroInView ? "visible" : "hidden"}
+            variants={fadeInUpStagger}
+          >
+            <motion.h1
+              variants={fadeInUp}
+              className="text-5xl lg:text-7xl font-display leading-tight text-gray-900 dark:text-[#D4C5A9] mb-8"
+            >
               Redefining Legal <br />
               Excellence —{" "}
               <span className="dark:text-white text-gray-600 block mt-2">
                 Welcome to NexaLaw
               </span>
-            </h1>
-          </div>
-          <div className="lg:pt-4 z-10 flex flex-col justify-between h-full">
+            </motion.h1>
+          </motion.div>
+          <motion.div
+            className="lg:pt-4 z-10 flex flex-col justify-between h-full"
+            initial="hidden"
+            animate={heroInView ? "visible" : "hidden"}
+            variants={fadeInUpStagger}
+          >
             <div>
-              <p className="text-lg text-gray-600 dark:text-[#A3A3A3] leading-relaxed mb-8 max-w-md ml-auto lg:ml-0">
+              <motion.p
+                variants={fadeInUp}
+                className="text-lg text-gray-600 dark:text-[#A3A3A3] leading-relaxed mb-8 max-w-md ml-auto lg:ml-0"
+              >
                 Our experienced attorneys are dedicated to turning your legal
                 goals into reality. Don&apos;t wait—reach out to us today to
                 discuss how we can help you achieve the results you deserve.
-              </p>
-              <div className="flex items-center gap-4">
+              </motion.p>
+              <motion.div
+                variants={fadeInUp}
+                className="flex items-center gap-4"
+              >
                 <button className="px-8 py-3 rounded-full border border-gray-300 dark:border-gray-700 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] text-gray-900 dark:text-white transition duration-300">
                   Explore More
                 </button>
                 <button className="w-12 h-12 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:scale-105 transition transform">
                   <ArrowUpRight className="w-5 h-5" />
                 </button>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
         <div className="max-w-7xl mx-auto mt-16 relative group cursor-pointer">
           <div className="absolute -left-12 -bottom-12 w-48 h-48 bg-[#D4C5A9]/20 rounded-full blur-3xl opacity-50 z-0"></div>
@@ -76,7 +145,7 @@ export default function Home() {
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuXSSJVeFovWge5c9BUPgNxqxVg3_OxQc2GHULlZ13rFsOUz_6rre3gFSWPKhHp2uNGTxqDWD8tDMkVq_9EwzvdD_qmvZTFvg1UmJodnT8P7wpBjAqajaUo2aLZ4xAQuluKdtPrh0PRWHb5r2tOhvspDaJxdfHzoF8D7qsELYpz7JwfM3ghn7gTf4Nk8Ls9AlHt7IcyTgrge4rSCHrsf4HIwbLlW2unlSWVhl9OXkd4998c55QmgZghemh9fdzbshqO0s65KQrcL5y"
               alt="Legal team meeting in a modern office"
               fill
-              className="object-cover transition duration-700 group-hover:scale-105 opacity-90 dark:opacity-80"
+              className="object-cover transition duration-700 opacity-90 dark:opacity-80"
               priority
             />
             <div className="absolute inset-0 flex items-center justify-center">
@@ -114,13 +183,24 @@ export default function Home() {
       </header>
 
       {/* Who We Are Section */}
-      <section className="py-24 px-6 md:px-12 bg-white dark:bg-[#141414] transition-colors duration-300">
+      <section
+        ref={whoWeAreRef}
+        className="py-24 px-6 md:px-12 bg-white dark:bg-[#141414] transition-colors duration-300"
+      >
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-display text-gray-900 dark:text-[#D4C5A9] mb-16">
+          <motion.h2
+            initial="hidden"
+            animate={whoWeAreInView ? "visible" : "hidden"}
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl font-display text-gray-900 dark:text-[#D4C5A9] mb-16"
+          >
             Who We Are at NexaLaw
-          </h2>
+          </motion.h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div
+            <motion.div
+              initial="hidden"
+              animate={whoWeAreInView ? "visible" : "hidden"}
+              variants={cardVariants}
               className="relative rounded-2xl overflow-hidden shadow-xl"
               style={{ aspectRatio: "4/3" }}
             >
@@ -130,15 +210,26 @@ export default function Home() {
                 fill
                 className="object-cover"
               />
-            </div>
-            <div className="flex flex-col space-y-12">
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              animate={whoWeAreInView ? "visible" : "hidden"}
+              variants={fadeInUpStagger}
+              className="flex flex-col space-y-12"
+            >
+              <motion.p
+                variants={fadeInUp}
+                className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed"
+              >
                 At NexaLaw, we bring unparalleled expertise, innovation, and
                 dedication to every legal challenge. Our team of seasoned
                 attorneys is committed to delivering justice and crafting
                 strategic solutions tailored to your unique needs.
-              </p>
-              <div className="grid grid-cols-3 gap-8 border-t border-gray-200 dark:border-gray-800 pt-8">
+              </motion.p>
+              <motion.div
+                variants={fadeInUp}
+                className="grid grid-cols-3 gap-8 border-t border-gray-200 dark:border-gray-800 pt-8"
+              >
                 <div>
                   <div className="text-3xl md:text-4xl font-display text-gray-900 dark:text-white mb-2">
                     20+
@@ -163,30 +254,49 @@ export default function Home() {
                     Comprehensive Legal Solutions
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-4 pt-4">
+              </motion.div>
+              <motion.div
+                variants={fadeInUp}
+                className="flex items-center gap-4 pt-4"
+              >
                 <button className="px-8 py-3 rounded-full border border-gray-300 dark:border-gray-600 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] text-gray-900 dark:text-white transition">
                   About us
                 </button>
                 <button className="w-12 h-12 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:scale-105 transition transform">
                   <ArrowUpRight className="w-5 h-5" />
                 </button>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="py-24 px-6 md:px-12 bg-[#F5F3EF] dark:bg-[#0A0A0A]">
+      <section
+        ref={servicesRef}
+        className="py-24 px-6 md:px-12 bg-[#F5F3EF] dark:bg-[#0A0A0A]"
+      >
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16">
-          <div className="lg:w-1/3">
+          <motion.div
+            initial="hidden"
+            animate={servicesInView ? "visible" : "hidden"}
+            variants={fadeInUp}
+            className="lg:w-1/3"
+          >
             <h2 className="text-4xl md:text-5xl font-display text-gray-900 dark:text-[#D4C5A9] leading-tight mb-6">
               Comprehensive Legal Services Designed for Your Success
             </h2>
-          </div>
-          <div className="lg:w-2/3 flex flex-col gap-6">
-            <div className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6">
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            animate={servicesInView ? "visible" : "hidden"}
+            variants={fadeInUpStagger}
+            className="lg:w-2/3 flex flex-col gap-6"
+          >
+            <motion.div
+              variants={cardVariants}
+              className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6"
+            >
               <div className="absolute -left-3 top-8 w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-mono text-gray-500">
                 1
               </div>
@@ -202,28 +312,33 @@ export default function Home() {
                   regulations and growth strategies efficiently.
                 </p>
               </div>
-            </div>
-            <Link
-              href="/services/family-law"
-              className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6 cursor-pointer"
+            </motion.div>
+            <motion.div variants={cardVariants}>
+              <Link
+                href="/services/family-law"
+                className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6 cursor-pointer"
+              >
+                <div className="absolute -left-3 top-8 w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-mono text-gray-500">
+                  2
+                </div>
+                <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg w-fit h-fit text-[#D4C5A9]">
+                  <UsersRound className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display text-gray-900 dark:text-[#D4C5A9] mb-2">
+                    Family Law
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Compassionate support for family-related matters, ensuring
+                    your rights and loved ones are protected.
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
+            <motion.div
+              variants={cardVariants}
+              className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6"
             >
-              <div className="absolute -left-3 top-8 w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-mono text-gray-500">
-                2
-              </div>
-              <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg w-fit h-fit text-[#D4C5A9]">
-                <UsersRound className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-display text-gray-900 dark:text-[#D4C5A9] mb-2">
-                  Family Law
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Compassionate support for family-related matters, ensuring
-                  your rights and loved ones are protected.
-                </p>
-              </div>
-            </Link>
-            <div className="group relative bg-white dark:bg-[#141414] p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-[#D4C5A9] dark:hover:border-[#D4C5A9] transition-all duration-300 flex flex-col md:flex-row gap-6">
               <div className="absolute -left-3 top-8 w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-mono text-gray-500">
                 3
               </div>
@@ -239,34 +354,58 @@ export default function Home() {
                   ensure a fair legal process.
                 </p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* What Sets Us Apart Section */}
-      <section className="py-24 px-6 md:px-12 bg-white dark:bg-[#141414]">
+      <section
+        ref={whatSetsUsRef}
+        className="py-24 px-6 md:px-12 bg-white dark:bg-[#141414]"
+      >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-4xl md:text-5xl font-display text-gray-900 dark:text-[#D4C5A9] mb-6">
+          <motion.div
+            initial="hidden"
+            animate={whatSetsUsInView ? "visible" : "hidden"}
+            variants={fadeInUpStagger}
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl font-display text-gray-900 dark:text-[#D4C5A9] mb-6"
+            >
               &quot;What Sets Us Apart?&quot;
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-lg">
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-lg"
+            >
               Experience unmatched expertise, personalized solutions, and a
               commitment to justice that makes NexaLaw your trusted legal
               partner.
-            </p>
-            <div className="rounded-2xl overflow-hidden shadow-lg h-64 md:h-80 w-full relative">
+            </motion.p>
+            <motion.div
+              variants={cardVariants}
+              className="rounded-2xl overflow-hidden shadow-lg h-64 md:h-80 w-full relative"
+            >
               <Image
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNI0KiVzmab-wcnkkRuGAQWvNHFkmBSUZEtADr2nLUSw6Z4VdeZdbhuyMkRA9ib3B6zsrUfmj_U4A-xMcGb7Lh20V3hI72Hi-m-p-tySvHgYHDcwNmJaYCwU6Id3TWKdFPWtRd2NbIdZC_Aes5vr6y7PolYnPEvpY27fOHh6xYPQVS7C1t_4u08hx9bobO74usN1peumb-B9AotdoLDgO9AmN-IoalXmTUVDTYoQavuWBGGvtife8ULnX-DHnd3Id47kq0NEXiRl1a"
                 alt="Legal team discussion"
                 fill
                 className="object-cover"
               />
-            </div>
-          </div>
-          <div className="flex flex-col space-y-4">
-            <div className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer relative overflow-hidden">
+            </motion.div>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            animate={whatSetsUsInView ? "visible" : "hidden"}
+            variants={fadeInUpStagger}
+            className="flex flex-col space-y-4"
+          >
+            <motion.div
+              variants={cardVariants}
+              className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer relative overflow-hidden"
+            >
               <div className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 group-hover:border-[#D4C5A9] dark:group-hover:border-[#D4C5A9] text-gray-500 dark:text-gray-400 group-hover:text-[#D4C5A9] transition">
                 <Brain className="w-6 h-6" />
               </div>
@@ -281,49 +420,69 @@ export default function Home() {
                   className="object-cover opacity-80"
                 />
               </div>
-            </div>
-            <div className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer">
+            </motion.div>
+            <motion.div
+              variants={cardVariants}
+              className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer"
+            >
               <div className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 group-hover:border-[#D4C5A9] dark:group-hover:border-[#D4C5A9] text-gray-500 dark:text-gray-400 group-hover:text-[#D4C5A9] transition">
                 <MessageCircle className="w-6 h-6" />
               </div>
               <span className="text-xl font-medium text-gray-800 dark:text-gray-200 group-hover:text-[#D4C5A9] transition">
                 Transparent Communication
               </span>
-            </div>
-            <div className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer">
+            </motion.div>
+            <motion.div
+              variants={cardVariants}
+              className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer"
+            >
               <div className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 group-hover:border-[#D4C5A9] dark:group-hover:border-[#D4C5A9] text-gray-500 dark:text-gray-400 group-hover:text-[#D4C5A9] transition">
                 <Trophy className="w-6 h-6" />
               </div>
               <span className="text-xl font-medium text-gray-800 dark:text-gray-200 group-hover:text-[#D4C5A9] transition">
                 Proven Success
               </span>
-            </div>
-            <div className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer">
+            </motion.div>
+            <motion.div
+              variants={cardVariants}
+              className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer"
+            >
               <div className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 group-hover:border-[#D4C5A9] dark:group-hover:border-[#D4C5A9] text-gray-500 dark:text-gray-400 group-hover:text-[#D4C5A9] transition">
                 <Cpu className="w-6 h-6" />
               </div>
               <span className="text-xl font-medium text-gray-800 dark:text-gray-200 group-hover:text-[#D4C5A9] transition">
                 Tech-Driven Approach
               </span>
-            </div>
-            <div className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer">
+            </motion.div>
+            <motion.div
+              variants={cardVariants}
+              className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center gap-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer"
+            >
               <div className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 group-hover:border-[#D4C5A9] dark:group-hover:border-[#D4C5A9] text-gray-500 dark:text-gray-400 group-hover:text-[#D4C5A9] transition">
                 <Users className="w-6 h-6" />
               </div>
               <span className="text-xl font-medium text-gray-800 dark:text-gray-200 group-hover:text-[#D4C5A9] transition">
                 Client-Centered Focus
               </span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 px-6 md:px-12 bg-[#F5F3EF] dark:bg-[#0A0A0A] overflow-hidden">
+      <section
+        ref={testimonialsRef}
+        className="py-24 px-6 md:px-12 bg-[#F5F3EF] dark:bg-[#0A0A0A] overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto mb-16 flex justify-between items-end">
-          <h2 className="text-4xl md:text-5xl font-display text-gray-900 dark:text-[#D4C5A9]">
+          <motion.h2
+            initial="hidden"
+            animate={testimonialsInView ? "visible" : "hidden"}
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl font-display text-gray-900 dark:text-[#D4C5A9]"
+          >
             What Our Clients Say
-          </h2>
+          </motion.h2>
           <div className="flex gap-4">
             <button className="w-12 h-12 rounded-full border border-gray-300 dark:border-gray-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-600 dark:text-gray-400">
               <ChevronLeft className="w-6 h-6" />
@@ -333,8 +492,16 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <div className="flex gap-8 overflow-x-auto pb-8 snap-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          <div className="min-w-[350px] md:min-w-[400px] snap-center">
+        <motion.div
+          initial="hidden"
+          animate={testimonialsInView ? "visible" : "hidden"}
+          variants={fadeInUpStagger}
+          className="flex gap-8 overflow-x-auto pb-8 snap-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        >
+          <motion.div
+            variants={cardVariants}
+            className="min-w-[350px] md:min-w-[400px] snap-center"
+          >
             <div className="h-full flex flex-col justify-between border-l border-gray-300 dark:border-gray-700 pl-8 py-2">
               <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 &quot;The team at NexaLaw went above and beyond to resolve my
@@ -360,8 +527,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="min-w-[350px] md:min-w-[400px] snap-center">
+          </motion.div>
+          <motion.div
+            variants={cardVariants}
+            className="min-w-[350px] md:min-w-[400px] snap-center"
+          >
             <div className="h-full flex flex-col justify-between border-l border-gray-300 dark:border-gray-700 pl-8 py-2">
               <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 &quot;NexaLaw turned a complex property dispute into a
@@ -387,8 +557,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="min-w-[350px] md:min-w-[400px] snap-center">
+          </motion.div>
+          <motion.div
+            variants={cardVariants}
+            className="min-w-[350px] md:min-w-[400px] snap-center"
+          >
             <div className="h-full flex flex-col justify-between border-l border-gray-300 dark:border-gray-700 pl-8 py-2">
               <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 &quot;Their expertise in corporate law was exactly what my
@@ -414,39 +587,57 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           <div className="min-w-[100px] opacity-20">
             <div className="h-full border-l border-gray-300 dark:border-gray-700 pl-8 py-2">
               <p className="text-gray-600 dark:text-gray-300">...</p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Our Process Section */}
-      <section className="py-24 px-6 md:px-12 bg-[#141414] text-white relative overflow-hidden">
+      <section
+        ref={processRef}
+        className="py-24 px-6 md:px-12 bg-[#141414] text-white relative overflow-hidden"
+      >
         <div className="absolute top-0 right-0 w-1/3 h-full bg-[#D4C5A9]/5 hidden lg:block"></div>
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
-            <h2 className="text-4xl md:text-5xl font-display text-[#D4C5A9] mb-8">
+          <motion.div
+            initial="hidden"
+            animate={processInView ? "visible" : "hidden"}
+            variants={fadeInUpStagger}
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl font-display text-[#D4C5A9] mb-8"
+            >
               Our Process
-            </h2>
-            <p className="text-gray-400 mb-12 max-w-md">
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-gray-400 mb-12 max-w-md"
+            >
               From understanding your goals to delivering results, our
               streamlined approach ensures clarity, precision, and success every
               step of the way.
-            </p>
-            <div className="flex items-center gap-4">
+            </motion.p>
+            <motion.div variants={fadeInUp} className="flex items-center gap-4">
               <button className="px-8 py-3 rounded-full border border-gray-600 hover:border-[#D4C5A9] text-white transition">
                 Let&apos;s talk
               </button>
               <button className="w-12 h-12 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:scale-105 transition transform">
                 <ArrowUpRight className="w-5 h-5" />
               </button>
-            </div>
-          </div>
-          <div className="flex flex-col space-y-6">
-            <div className="flex gap-6">
+            </motion.div>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            animate={processInView ? "visible" : "hidden"}
+            variants={fadeInUpStagger}
+            className="flex flex-col space-y-6"
+          >
+            <motion.div variants={cardVariants} className="flex gap-6">
               <div className="flex flex-col items-center">
                 <div className="w-8 h-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-sm text-gray-400">
                   1
@@ -462,8 +653,8 @@ export default function Home() {
                   aspirations, ensuring we align on expectations.
                 </p>
               </div>
-            </div>
-            <div className="flex gap-6">
+            </motion.div>
+            <motion.div variants={cardVariants} className="flex gap-6">
               <div className="flex flex-col items-center">
                 <div className="w-8 h-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-sm text-gray-400">
                   2
@@ -479,8 +670,8 @@ export default function Home() {
                   enabling us to identify key priorities.
                 </p>
               </div>
-            </div>
-            <div className="flex gap-6">
+            </motion.div>
+            <motion.div variants={cardVariants} className="flex gap-6">
               <div className="flex flex-col items-center">
                 <div className="w-8 h-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-sm text-gray-400">
                   3
@@ -495,8 +686,8 @@ export default function Home() {
                   updates.
                 </p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
