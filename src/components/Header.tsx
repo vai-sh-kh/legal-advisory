@@ -43,49 +43,57 @@ export default function Header() {
   };
 
   return (
-    <nav className="sticky top-0 w-full px-6 py-6 md:px-12 flex justify-between items-center bg-[#F5F3EF]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 z-20 2xl:px-60">
-      <Link
-        href="/"
-        className="text-2xl  md:text-4xl font-display font-bold text-gray-900 dark:text-[#D4C5A9] tracking-wide hover:opacity-80 transition-opacity"
-      >
-        NexaLaw
-      </Link>
-
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex gap-8 items-center text-sm font-medium text-gray-700 dark:text-gray-300">
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`hover:text-[#D4C5A9] transition-colors ${
-              isActive(link.href) ? "text-[#D4C5A9] dark:text-[#D4C5A9]" : ""
-            }`}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <ThemeToggle />
+    <>
+      <nav className="sticky top-0 w-full px-6 py-6 md:px-12 flex justify-between items-center bg-[#F5F3EF]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 z-30 2xl:px-60">
         <Link
-          href="/contact"
-          className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#D4C5A9] text-[#0A0A0A] font-medium hover:bg-[#D4C5A9]/90 transition-all duration-300"
+          href="/"
+          className="text-2xl  md:text-4xl font-display font-bold text-gray-900 dark:text-[#D4C5A9] tracking-wide hover:opacity-80 transition-opacity"
         >
-          <span>Get in Touch</span>
-          <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
+          NexaLaw
         </Link>
-      </div>
 
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className="w-10 h-10 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:opacity-90 transition md:hidden z-30"
-        aria-label="Toggle menu"
-      >
-        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-      </button>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex gap-8 items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`hover:text-[#D4C5A9] transition-colors ${
+                isActive(link.href) ? "text-[#D4C5A9] dark:text-[#D4C5A9]" : ""
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <ThemeToggle />
+          <Link
+            href="/contact"
+            className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#D4C5A9] text-[#0A0A0A] font-medium hover:bg-[#D4C5A9]/90 transition-all duration-300"
+          >
+            <span>Get in Touch</span>
+            <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className={`w-10 h-10 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#0A0A0A] hover:opacity-90 transition md:hidden ${
+            isMenuOpen ? "fixed top-6 right-6 z-50" : "relative z-50"
+          }`}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
+        </button>
+      </nav>
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-[#F5F3EF] dark:bg-[#0A0A0A] z-20 md:hidden">
+        <div className="fixed inset-0 bg-[#F5F3EF] dark:bg-[#0A0A0A] z-40 md:hidden">
           <div className="flex flex-col h-full pt-24 px-6">
             <nav className="flex flex-col gap-6">
               {navLinks.map((link) => (
@@ -117,6 +125,6 @@ export default function Header() {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
