@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, type Easing } from "framer-motion";
 import {
   ArrowUpRight,
   UsersRound,
@@ -22,7 +22,7 @@ export default function Services() {
       y: 0,
       transition: {
         duration: 0.7,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
@@ -45,7 +45,7 @@ export default function Services() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
@@ -153,7 +153,10 @@ export default function Services() {
           >
             {services.map((service, index) => {
               const ServiceCard = (
-                <motion.div variants={cardVariants} className="relative group my-8 lg:my-16">
+                <motion.div
+                  variants={cardVariants}
+                  className="relative group my-8 lg:my-16"
+                >
                   <div className="absolute -left-[3.25rem] md:-left-[4.25rem] top-0 flex flex-col items-center h-full">
                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1A1A1A] flex items-center justify-center text-sm font-medium text-gray-600 dark:text-[#A3A3A3] z-10 group-hover:border-[#D4C5A9] group-hover:text-[#D4C5A9] transition-colors duration-300">
                       {service.number}

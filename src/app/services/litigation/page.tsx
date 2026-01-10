@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, type Easing } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,7 +16,7 @@ export default function LitigationPage() {
       y: 0,
       transition: {
         duration: 0.7,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
@@ -39,7 +39,7 @@ export default function LitigationPage() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
@@ -192,9 +192,9 @@ export default function LitigationPage() {
               <p className="text-gray-600 dark:text-[#A3A3A3] text-lg leading-relaxed">
                 Many disputes are won before they ever reach a judge. We excel
                 in pre-litigation negotiation, utilizing detailed case analysis
-                and leverage to secure settlements that align with our clients'
-                needs. Our reputation for trial readiness gives us a unique
-                advantage at the bargaining table.
+                and leverage to secure settlements that align with our
+                clients&apos; needs. Our reputation for trial readiness gives us
+                a unique advantage at the bargaining table.
               </p>
             </motion.section>
           </motion.div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Easing } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -14,7 +14,7 @@ const pageVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.22, 1, 0.36, 1] as any,
+      ease: [0.22, 1, 0.36, 1] as Easing,
     },
   },
   exit: {
@@ -22,7 +22,7 @@ const pageVariants = {
     y: -20,
     transition: {
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1] as any,
+      ease: [0.22, 1, 0.36, 1] as Easing,
     },
   },
 };

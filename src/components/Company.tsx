@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, type Easing } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -42,7 +42,7 @@ export default function Company() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
@@ -55,7 +55,7 @@ export default function Company() {
       scale: 1,
       transition: {
         duration: 0.7,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };

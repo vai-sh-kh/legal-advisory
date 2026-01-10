@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, type Easing } from "framer-motion";
 import { Play, ArrowRight, Users, AlertTriangle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,7 +16,7 @@ export default function FamilyLawPage() {
       y: 0,
       transition: {
         duration: 0.7,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
@@ -39,7 +39,7 @@ export default function FamilyLawPage() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };

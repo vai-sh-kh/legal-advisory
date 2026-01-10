@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, type Easing } from "framer-motion";
 import {
   Building2,
   DollarSign,
@@ -23,7 +23,7 @@ export default function OurProcess() {
       y: 0,
       transition: {
         duration: 0.7,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
@@ -46,7 +46,7 @@ export default function OurProcess() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as any,
+        ease: [0.22, 1, 0.36, 1] as Easing,
       },
     },
   };
